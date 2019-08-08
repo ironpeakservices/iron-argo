@@ -7,7 +7,6 @@ Check it out on [Docker Hub](https://hub.docker.com/r/ironpeakservices/iron-argo
 We build from the official cloudflared source code, but additionally:
 - an empty scratch container (no shell, unprivileged user, ...) for a tiny attack vector
 - hardened Docker Compose file
-- max volume size set to 10GB, max memory set to 4GB
 
 ## Example
 See the `argo.compose` file.
