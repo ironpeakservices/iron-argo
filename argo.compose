@@ -16,6 +16,8 @@ services:
 
         restart: "on-failure:5"
 
+        # note: this will prevent autoupdate from working, and why we disable it
+        # since updates do not provide a static build for a scratch image.
         read_only: true
 
         security_opt:
