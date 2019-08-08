@@ -1,0 +1,43 @@
+version: '3.7'
+
+networks:
+    frontend:
+        name: frontend
+        internal: false
+
+volumes:
+    redis-data:
+
+services:
+    argo:
+        container_name: argo
+        hostname: argo
+
+        image: "ironpeakservices/iron-argo:latest"
+
+        tty: false
+
+        restart: "on-failure:5"
+
+        read_only: true
+
+        security_opt:
+            - "no-new-privileges"
+
+        # only on compose version 2.x
+        #pids_limit: 1
+
+        cap_drop:
+            - ALL
+
+        networks:
+            - frontend
+
+        deploy:
+            resources:
+                limits:
+                    memory: 4GB
+
+        environment:
+            - HOSTNAME=app.company.com
+            - TUNNEL_HELLO_WORLD=1
