@@ -10,4 +10,4 @@ We build from the official cloudflared source code, but additionally:
 - max volume size set to 10GB, max memory set to 4GB
 
 ## Example
-See the `docker.compose` file.
+See the `argo.compose` file.
