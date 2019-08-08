@@ -10,7 +10,7 @@ services:
         container_name: argo
         hostname: argo
 
-        image: "ironpeakservices/iron-argo:latest"
+        image: "ironpeakservices/iron-argo"
 
         tty: false
 
@@ -37,6 +37,9 @@ services:
                 limits:
                     memory: 4GB
 
+        # tunnel exposes a local service to a global url on cloudflare
+        # for exposing SSH/RDP, use access
+        command: ["--no-autoupdate", "tunnel"]
         environment:
             - HOSTNAME=app.company.com
             - TUNNEL_HELLO_WORLD=1
