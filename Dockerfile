@@ -6,6 +6,7 @@ RUN adduser -s /bin/true -u 1000 -D -h /app app \
 	&& sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
 
 # Add prequisites and fetch go cpde
+# hadolint ignore=DL3018
 RUN apk add --no-cache ca-certificates git gcc build-base \
 	&& go get -v github.com/cloudflare/cloudflared/cmd/cloudflared
 
