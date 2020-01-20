@@ -1,0 +1,42 @@
+on: pull_request
+name: PR Checks
+jobs:
+  dockerfilelint:
+    name: dockerfile lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: hadolint
+      uses: burdzwastaken/hadolint-action@1.6.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HADOLINT_ACTION_DOCKERFILE_FOLDER: .
+  
+  dockerbuild:
+    name: docker build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: docker build
+      run: docker build . --file Dockerfile --tag image:1
+
+  dockerscan:
+    name: docker security scan
+    runs-on: ubuntu-latest
+    needs: dockerbuild
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: docker build
+      run: docker build . --file Dockerfile --tag image:1
+    - name: cached scan db
+      uses: actions/cache@preview
+      with:
+        path: vulndb/
+        key: trivy-vulndb
+    - name: Install Trivy
+      run:  |
+        trivyRelease="$(curl -s "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | cut -d 'v' -f 2)"
+        wget https://github.com/aquasecurity/trivy/releases/download/v${trivyRelease}/trivy_${trivyRelease}_Linux-64bit.tar.gz
+        tar zxvf trivy_${trivyRelease}_Linux-64bit.tar.gz
+    - name: Scan
+      run: ./trivy --exit-code 1 --no-progress --severity HIGH,CRITICAL,MEDIUM --cache-dir vulndb/ image:1
