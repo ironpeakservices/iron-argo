@@ -38,16 +38,11 @@ jobs:
     needs: dockerbuild
     steps:
     - uses: actions/checkout@v2.0.0
-    - name: extract tag
-      id: vars
-      run: echo ::set-output name=argo_version::$(date -u '+%Y.%m.%d')
     - name: load cached docker image
       uses: actions/cache@v1
       with:
         path: image/
         key: ${{ runner.os }}-docker-${{ github.sha }}
-    - name: load cached docker container
-      run: docker load -i image/image.tar
     - name: cached scan db
       uses: actions/cache@preview
       with:
@@ -59,5 +54,6 @@ jobs:
         wget https://github.com/aquasecurity/trivy/releases/download/v${trivyRelease}/trivy_${trivyRelease}_Linux-64bit.tar.gz
         tar zxvf trivy_${trivyRelease}_Linux-64bit.tar.gz
     - name: Scan
-      run: ./trivy --exit-code 1 --no-progress --severity HIGH,CRITICAL,MEDIUM --cache-dir vulndb/ image:${{ steps.vars.outputs.argo_version }}
+      # --vuln-type library is necessary since the default is os,library and this doesn't work with scratch images
+      run: ./trivy --vuln-type library --exit-code 1 --no-progress --severity HIGH,CRITICAL,MEDIUM --cache-dir vulndb/ --input image/image.tar
 
