@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.13.3-alpine3.10 AS builder
 
 # add unprivileged user
 RUN adduser -s /bin/true -u 1000 -D -h /app app \
@@ -7,8 +7,10 @@ RUN adduser -s /bin/true -u 1000 -D -h /app app \
 
 # Add prequisites and fetch go cpde
 # hadolint ignore=DL3018
-RUN apk add --no-cache ca-certificates git gcc build-base \
-	&& go get -v github.com/cloudflare/cloudflared/cmd/cloudflared
+RUN apk add --no-cache ca-certificates git gcc build-base
+
+# copy in our cloudflared sources so we can build it
+COPY cloudflared /go/src/github.com/cloudflare/cloudflared
 
 # Switch to the working dir
 WORKDIR /go/src/github.com/cloudflare/cloudflared/cmd/cloudflared
