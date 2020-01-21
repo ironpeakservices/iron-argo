@@ -10,7 +10,7 @@ RUN adduser -s /bin/true -u 1000 -D -h /app app \
 RUN apk add --no-cache ca-certificates git gcc build-base
 
 # copy in our cloudflared sources so we can build it
-COPY cloudflared/ /go/src/github.com/cloudflare/cloudflared
+COPY cloudflared /go/src/github.com/cloudflare/cloudflared
 
 # Switch to the working dir
 WORKDIR /go/src/github.com/cloudflare/cloudflared/cmd/cloudflared
