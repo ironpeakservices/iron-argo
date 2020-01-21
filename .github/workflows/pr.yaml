@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2.0.0
+    - name: check out submodule
+      run: git submodule sync --recursive && git submodule update --init --recursive
     - name: docker build
       run: docker build . --file Dockerfile --tag image:1
 
@@ -26,6 +28,8 @@ jobs:
     needs: dockerbuild
     steps:
     - uses: actions/checkout@v2.0.0
+    - name: check out submodule
+      run: git submodule sync --recursive && git submodule update --init --recursive
     - name: docker build
       run: docker build . --file Dockerfile --tag image:1
     - name: cached scan db
