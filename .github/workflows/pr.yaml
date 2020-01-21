@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2.0.0
     - name: check out submodule
-      run: git submodule sync --recursive && git submodule update --init --recursive
+      run: git submodule sync --recursive
     - name: extract tag
       id: vars
       run: echo ::set-output name=argo_version::$(date -u '+%Y.%m.%d')
