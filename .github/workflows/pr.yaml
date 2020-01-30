@@ -57,3 +57,11 @@ jobs:
       # --vuln-type library is necessary since the default is os,library and this doesn't work with scratch images
       run: ./trivy --vuln-type library --exit-code 1 --no-progress --severity HIGH,CRITICAL,MEDIUM --cache-dir vulndb/ --input image/image.tar
 
+  approve:
+    name: Dependabot PR Auto-approve
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/auto-approve-action@v2.0.0
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
