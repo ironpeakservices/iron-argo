@@ -59,7 +59,8 @@ jobs:
 
   approve:
     name: Dependabot PR Auto-approve
-    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    needs: dockerbuild
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]' || github.actor == 'dependabot-preview'
     runs-on: ubuntu-latest
     steps:
     - uses: hmarr/auto-approve-action@v2.0.0
