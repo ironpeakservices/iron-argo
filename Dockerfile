@@ -1,4 +1,4 @@
-FROM golang:1.13.3-alpine3.10 AS builder
+FROM golang:1.13.8-alpine3.10 AS builder
 
 # add unprivileged user
 RUN adduser -s /bin/true -u 1000 -D -h /app app \
