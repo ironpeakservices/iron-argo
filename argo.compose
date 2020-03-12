@@ -2,8 +2,8 @@ version: '3.7'
 
 networks:
     frontend:
-        name: frontend
-        internal: false
+        name: backend
+        internal: true
 
 services:
     argo:
@@ -30,7 +30,7 @@ services:
             - ALL
 
         networks:
-            - frontend
+            - backend
 
         deploy:
             resources:
