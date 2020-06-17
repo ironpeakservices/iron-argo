@@ -24,7 +24,7 @@ jobs:
         username: hazcod
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Create GitHub release
-      uses: actions/create-release@v1
+      uses: actions/create-release@v1.1.1
       with:
           tag_name: ${{ steps.vars.outputs.argo_version }}
           release_name: iron-argo
