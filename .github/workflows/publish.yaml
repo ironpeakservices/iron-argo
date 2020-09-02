@@ -17,7 +17,7 @@ jobs:
       run: echo ::set-output name=argo_version::$(date -u '+%Y.%m.%d')
     - run: echo "Pushing version ${{ steps.vars.outputs.argo_version }}"
     - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@2.20
+      uses: elgohr/Publish-Docker-Github-Action@2.21
       with:
         registry: docker.pkg.github.com
         name: "ironpeakservices/iron-argo/iron-argo:${{ steps.vars.outputs.argo_version }}"
