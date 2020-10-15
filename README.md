@@ -1,7 +1,7 @@
 # iron-argo
 Secure base image for running Argo tunnel service to connect to Cloudflare servers.
 
-`docker pull docker.pkg.github.com/ironpeakservices/iron-redis/iron-argo:<version>`
+`docker pull ghrcr.io/ironpeakservices/iron-argo:1.0.0`
 
 ## How is this different?
 We build from the official cloudflared source code, but additionally:
